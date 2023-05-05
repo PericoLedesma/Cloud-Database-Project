@@ -3,19 +3,20 @@ import sys
 # import nltk
 # import threading
 
+
 # ------------------------------------------------------------------------
 
 class Client():
     def __init__(self):
         self.address_family = socket.AF_INET
         self.socket_type = socket.SOCK_STREAM
-        self.sock = socket.socket(self.address_family, self.socket_type)
         self.connected = False
 
     def connect(self, server, port):
         if self.connected is False:
             self.port = port
             self.server = server
+            self.sock = socket.socket(self.address_family, self.socket_type)
             self.sock.connect((self.server, self.port))
             self.connected = True
             #Todo Note, if the connection establishment failed, the client application should provide a useful error message to the user
@@ -37,10 +38,6 @@ class Client():
             delimiter = ' '
             message = delimiter.join(tokens)
             self.sock.sendall(message.encode())
-
-            # data = self.sock.recv(1024)  # Number of bytes we are waiting
-            # buffer = data.decode()
-            # return (f"Received: {buffer}")
             return self.receive_message()
         else:
             return("No connection active")
@@ -101,8 +98,7 @@ def main():
     CLI = Command_line_shell()
     socket_to_server = Client()
 
-    server='cdb.dis.cit.tum.de'
-    port=5551
+    #   connect cdb.dis.cit.tum.de 5551
 
     while True:
         CLI.user_input() # List of tokens
