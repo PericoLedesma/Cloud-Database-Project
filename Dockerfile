@@ -46,7 +46,7 @@ COPY . .
 # CMD (command)
 # To run flask.  python3 -m flask run --host=0.0.0.0 --port=4567
 # CMD specifies what command to run within the container.
-CMD [ "python", "./main.py" ]
+CMD [ "python", "./client.py" ]
 
 
 #CMD [ "python", "./helloworld.py"]

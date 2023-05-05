@@ -90,27 +90,19 @@ class Command_line_shell():
 
 
     def user_input(self):
-        # cli_input = sys.stdin.readline().strip()
-        # sys.stdout.write('EchoClient>')
-        # print("primero")
-        # cli_input = sys.stdin.readline()
-        # print("Command", cli_input)
         cli_input = input("EchoClient>").split()
-        token_list = []
+        self.command = []
         for word in cli_input:
-            token_list.append(word)
-
-        self.command = token_list
-        print("Tokens:", self.command)
+            self.command.append(word)
 
 
 # ----------------------------------------------------------------------------
 def main():
     CLI = Command_line_shell()
     socket_to_server = Client()
-    # For the futurew
-    # receive_thread = threading.Thread(target=socket_to_server.listener)
-    # receive_thread.start()
+
+    server='cdb.dis.cit.tum.de'
+    port=5551
 
     while True:
         CLI.user_input() # List of tokens
@@ -119,7 +111,7 @@ def main():
             if len(CLI.command) != 3:
                 CLI.cli_output("connect command needs 2 arguments: server + port")
             elif len(CLI.command) == 3:
-                CLI.cli_output(socket_to_server.connect('cdb.dis.cit.tum.de', 5551))
+                CLI.cli_output(socket_to_server.connect(CLI.command[1], int(CLI.command[2])))
                 CLI.cli_output(socket_to_server.receive_message())
 
         elif CLI.command[0] == "disconnect":
@@ -130,7 +122,6 @@ def main():
 
         elif CLI.command[0] == "send":
             if len(CLI.command) > 1:
-                # CLI.cli_output(socket_to_server.listen())
                 CLI.cli_output(socket_to_server.send_messages(CLI.command[1:]))
             elif len(CLI.command) == 1:
                 CLI.cli_output("send command needs 1 argument at least")
