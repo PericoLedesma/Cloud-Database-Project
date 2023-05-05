@@ -1,0 +1,3 @@
+
+docker build -t client.py .
+docker run -it client.py
